@@ -1,7 +1,10 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { addCartItem, decrementCartItem } from "../../../actions/cart.actions";
-import { decreesOfAvailable, increaseOfAvailable } from "../../../actions/products.action";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addCartItem, decrementCartItem } from '../../../actions/cart.actions';
+import { decreesOfAvailable, increaseOfAvailable } from '../../../actions/products.action';
+
+// Styles
+import './cart-item.css';
 
 class CartItem extends Component {
   handlerIncrease = () => {
@@ -19,24 +22,24 @@ class CartItem extends Component {
   };
 
   render() {
-    const product = this.props.products[this.props.index];
+    const product = this.props.item;
     return (
       <div>
-        <div style={cartItemBox}>
+        <div className='cartItemBox'>
           <div>
             <div>{this.props.item.name}</div>
             <div>price: {this.props.item.price}</div>
           </div>
-          <div style={inputButtonBox}>
-          {product.amount > 1 && (
-              <button onClick={this.handlerDecrease}>-</button>
-            )}
+          <div className='inputButtonBox'>
+            {product.amount > 1 && (
+                <button onClick={this.handlerDecrease}>-</button>
+              )}
             <div>{product.amount}</div>
             {product.amount < product.available && (
               <button onClick={this.handlerIncrease}>+</button>
             )}
             <button
-              style={btnElement}
+              className='btnElement'
               onClick={() => this.props.handleDeleteClick(this.props.item)}
             >
               X
@@ -48,26 +51,6 @@ class CartItem extends Component {
     );
   }
 }
-
-const cartItemBox = {
-  marginTop: "3px",
-  width: "60vw",
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center"
-};
-
-const btnElement = {
-  marginLeft: "10px",
-  background: "#ea4535",
-  fontSize: "20px",
-  borderRadius: "50%"
-};
-
-const inputButtonBox = {
-  display: "flex",
-  alignItems: "center"
-};
 
 const mapStateToProps = state => ({
   products: state.inCart

@@ -1,40 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import {addCartItem} from '../../actions/cart.actions';
-import Product from './Product';
+import React, {useState, useContext} from 'react';
+import * as Context from '../../context';
+
+// Components
+import Product from './components/Product';
+
+// Styles
 import './product-list.css';
 
-function ProductList () {
-  const [product, setProduct] = useState([]);
-
-  useEffect(() => {
-    if (product.length === 0) {
-      fetch('/prodList.json')
-        .then(res => res.json())
-        .then(products => {
-          setProduct(products);
-          return products;
-        })
-        .catch(function(err) {
-          alert(`Fetch error: ${err}`);
-        });
-    }
-  }, [product.length]);
+export default function ProductList() {
+  const {products, setProducts} = useContext(Context.Products);
 
   function sortByPrice() {
-    setProduct([...product].sort((a, b) => (b.price > a.price) ? 1 : -1));
+    setProducts([...products].sort((a, b) => (b.price > a.price) ? 1 : -1));
   }
 
   function sortByName() {
-    setProduct([...product].sort((a, b) => (b.price > a.price) ? 1 : -1));
+    setProducts([...products].sort((a, b) => (a.name > b.name) ? 1 : -1));
   }
 
   function sortByAvailability() {
-    setProduct([...product].sort((a, b) => (b.price > a.price) ? 1 : -1));
+    setProducts([...products].sort((a, b) => (b.available > a.available) ? 1 : -1));
   }
-
-  // addCartItem = product => {
-  //   this.props.addCartItem(product);
-  // }
 
   return (
     <div>
@@ -47,17 +33,15 @@ function ProductList () {
         <button onClick={sortByAvailability}>Availability</button>
       </div>
       <div style={{display: 'flex', flexWrap: 'wrap'}}>
-        {product.map((product, index) => (
-          <Product
-            key={product.id}
-            product={product}
-            index={index}
-            addCartItem={addCartItem()}
-          />
-        ))}
+        {
+          products.map((product) => (
+            <Product
+              key={product.id}
+              product={product}/>
+          ))
+        }
       </div>
     </div>
   );
 }
 
-export default ProductList;

@@ -1,96 +1,91 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, {useContext, useState} from 'react';
+import * as Context from '../../context';
 
-import './cart.css';
-import {removeFromCart} from '../../actions/cart.actions';
-import {increaseOfAvailableDeleted} from '../../actions/products.action';
+// Components
 import CartItem from './components/CartItem';
 
-export class Cart extends Component {
-  state = {
-      showSummary: false
-  };
+// Styles
+import './cart-list.css';
 
+export default function CartList() {
+  const [totalPrice, setTotalPrice] = useState(false);
+  const {cart, setCart} = useContext(Context.Cart);
+  const {products, setProducts} = useContext(Context.Products);
 
-  handleDeleteClick = item => {
-    this.props.removeFromCart(item.id);
-    console.log('item', item);
-    this.props.increaseOfAvailableDeleted(item);
-  };
+  function handleDeleteClick(prod) {
+    console.log(prod);
+    setCart(cart.filter(item => item.id !== prod.id));
+    const index = products.findIndex(item => item.id === prod.id);
+    products[index].available+= products[index].amount;
+    products[index].amount = 0;
+    setProducts([...products]);
+  }
 
-  handleNextClick = () => {
-    this.setState({showSummary: true});
-  };
+  function handleNextClick() {
+    setTotalPrice(true);
+  }
 
-  getTotalPrice() {
-    return this.props.inCart.reduce(
+  function getTotalPrice() {
+    return cart.reduce(
       (sum, item) => sum + item.price * item.amount,
       0
     );
   }
 
-  renderItems() {
+  function renderItems() {
     return (
       <div>
-        {this.props.inCart.map((item, index) => (
+        {cart.map((item, index) => (
           <CartItem
             key={item.id}
             item={item}
             index={index}
-            handleDeleteClick={this.handleDeleteClick}
+            handleDeleteClick={handleDeleteClick}
           />
         ))}
       </div>
     );
   }
 
-  renderSummary() {
+  function renderSummary() {
     return (
       <div>
         <div>
           <h2>Summary</h2>
-          {this.props.inCart.map(({name, price, amount}) => (
-            <div>
+          {cart.map(({name, price, amount}) => (
+            <div key={name.id}>
               {name}<br/>
               Price: {price} | Amount: {amount}
               <hr/>
               <br/>
             </div>
           ))}
-          <h3>Total: {this.getTotalPrice()}</h3>
+          <h3>Total: {getTotalPrice()}</h3>
           <h2>Successful shopping</h2>
         </div>
       </div>
     );
   }
 
-  render() {
-    return (
-      <div>
-        <div className="App-cart">
-          {this.props.inCart.length ? (
-            <div>
-              {this.state.showSummary ? (
-                this.renderSummary()
-              ) : (
-                <div>
-                  {this.renderItems()}
-                  <button onClick={this.handleNextClick}>Next</button>
-                </div>
-              )}
-            </div>
-          ) : (
-            'Your cart is empty :('
-          )}
-        </div>
+  return (
+    <div>
+      <div className='App-cart'>
+        {cart ? (
+          <div>
+            {totalPrice ? (
+              renderSummary()
+            ) : (
+              <div>
+                {renderItems()}
+                <button onClick={handleNextClick}>Next</button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <button onClick={() => alert('Buy Something')}>theme</button>
+        )}
       </div>
-    );
-  }
+      <button onClick={() => console.log(cart)}>test</button>
+    </div>
+  );
 }
-
-const mapStateToProps = state => ({...state});
-
-export default connect(
-  mapStateToProps,
-  {removeFromCart, increaseOfAvailableDeleted}
-)(Cart);
