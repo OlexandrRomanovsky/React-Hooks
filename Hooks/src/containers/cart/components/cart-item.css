@@ -1,0 +1,19 @@
+.cartItemBox {
+    margin-top: 3px;
+    width: 60vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btnElement {
+    margin-left: 10px;
+    background: #ea4535;
+    font-size: 20px;
+    border-radius: 50%;
+}
+
+.inputButtonBox {
+    display: flex;
+    align-items: center;
+}
