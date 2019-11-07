@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82bf6a7d-b7d0-4b23-b8c4-21f772304183" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/containers/product-list/components/Product.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/prodList.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/prodList.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/header/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/header/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/cart/cart.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/cart/cart-list.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/cart/components/CartItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/cart/components/CartItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/cart/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/cart/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/product-list/Product.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/product-list/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/product-list/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +66,7 @@
       <option name="presentableId" value="Default" />
       <updated>1572860395675</updated>
       <workItem from="1572860398405" duration="1538000" />
-      <workItem from="1572866532764" duration="90377000" />
+      <workItem from="1572866532764" duration="91558000" />
     </task>
     <servers />
   </component>

@@ -49,7 +49,6 @@ export default function App() {
       if (item.id === prod.id) {
         ++item.amount;
         --item.available;
-        console.log('change in product list', item);
       }
       return item;
     }));
@@ -64,13 +63,10 @@ export default function App() {
       return item;
     });
     setCart(newCart);
-    console.log('next to cart list', cart);
   }
 
   function addProductToCart(prod) {
-    const newCartItem = {...prod};
-    setCart([...cart, newCartItem]);
-    console.log('+ to cart', prod);
+    setCart([...cart, {...prod}]);
   }
 
   return (
