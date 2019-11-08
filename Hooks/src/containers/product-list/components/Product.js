@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import * as Context from '../../../context';
 
 export default function Product({product}) {
-  const {addCartItem} = useContext(Context.Products);
+  const {addCartItem: addProductToCart} = useContext(Context.Products);
   const [prod, setProd] = useState(product);
 
   return (
@@ -15,7 +15,7 @@ export default function Product({product}) {
       {product.available ? (
         <button
           className="add-to-cart-btn"
-          onClick={() => addCartItem(prod)}
+          onClick={() => addProductToCart(prod)}
         >
           Buy
         </button>

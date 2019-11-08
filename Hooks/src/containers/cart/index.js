@@ -13,12 +13,15 @@ export default function CartList() {
   const {products, setProducts} = useContext(Context.Products);
 
   function handleDeleteClick(prod) {
-    console.log(prod);
     setCart(cart.filter(item => item.id !== prod.id));
-    const index = products.findIndex(item => item.id === prod.id);
-    products[index].available+= products[index].amount;
-    products[index].amount = 0;
-    setProducts([...products]);
+    const newProductListArr = products.map((item) => {
+      if (item.id === prod.id) {
+        item.available+= item.amount;
+        item.amount = 0;
+      }
+      return item;
+    })
+    setProducts(newProductListArr);
   }
 
   function handleNextClick() {
@@ -35,10 +38,10 @@ export default function CartList() {
   function renderItems() {
     return (
       <div>
-        {cart.map((item, index) => (
+        {cart.map((product, index) => (
           <CartItem
-            key={item.id}
-            item={item}
+            key={product.id}
+            product={product}
             index={index}
             handleDeleteClick={handleDeleteClick}
           />

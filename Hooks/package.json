@@ -20,8 +20,7 @@
   "description": "<h3>Task for react group</h3>",
   "main": "index.js",
   "devDependencies": {
-    "eslint": "^6.6.0",
-    "eslint-loader": "^3.0.2",
+    "eslint": "^5.14.1",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.2.0",
     "eslint-plugin-react-redux": "^3.0.2",

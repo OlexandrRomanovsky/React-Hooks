@@ -30,6 +30,8 @@ export default function App() {
 
   useEffect(() => {console.log('product list', products); console.log('cart list ', cart);});
 
+    // Actions from product page
+
   function addCartItem(prod) {
     const inCart = cart.find(i => i.id === prod.id);
 
@@ -69,6 +71,62 @@ export default function App() {
     setCart([...cart, {...prod}]);
   }
 
+  // Actions from cart page
+
+  function handlerIncrease(prod) {
+    increaseCartItem(prod);
+    decreesInProductList(prod);
+  };
+
+  function increaseCartItem(prod) {
+      let newCartArr = cart.map((item) => {
+        if (item.id === prod.id) {
+          item.amount = item.amount + 1;
+          item.available = item.available - 1;
+        }
+        return item;
+      })
+      setCart(newCartArr);
+    }
+
+    function decreesInProductList(prod) {
+      let newProductsArr = products.map((item) => {
+        if (item.id === prod.id) {
+          item.amount = item.amount + 1;
+          item.available = item.available - 1;
+        }
+        return item;
+      })
+      setCart(newProductsArr);
+    }
+
+  function handlerDecrease(prod) {
+    decrementCartItem(prod);
+    increaseInProductList(prod);
+  };
+
+  function decrementCartItem(prod) {
+    let newCartArr = cart.map((item) => {
+      if (item.id === prod.id) {
+        item.amount = item.amount - 1;
+        item.available = item.available + 1;
+      }
+      return item;
+    })
+    setCart(newCartArr);
+  }
+
+  function increaseInProductList(prod) {
+    let newProductsArr = cart.map((item) => {
+      if (item.id === prod.id) {
+        item.amount = item.amount - 1;
+        item.available = item.available + 1;
+      }
+      return item;
+    })
+    setProducts(newProductsArr);
+  }
+
   return (
     <Router>
       <div className="App">
@@ -76,7 +134,7 @@ export default function App() {
         <div className="App-wrapper">
           <SideBar />
           <Context.Products.Provider value={{products, setProducts, addCartItem}}>
-            <Context.Cart.Provider value={{cart, setCart}}>
+            <Context.Cart.Provider value={{handlerIncrease, handlerDecrease}}>
               <Switch>
                 <Route path="/product" component={ProductList}/>
                 <Route path="/cart" component={CartList}/>
