@@ -1,86 +1,89 @@
-import React, { Component } from "react";
-import { addNewProduct } from "../../actions/products.action";
-import { connect } from "react-redux";
+import React, { useState, useRef, useContext } from 'react';
+import * as Context from '../../context';
 
-class Modal extends Component {
-  state = {
-    name: "",
-    price: "",
-    available: "",
-    id: ""
+export default function Modal() {
+  let dialog = useRef();
+
+  const newProduct = {
+    name: '',
+    price: '',
+    available: '',
+    amount: 0,
+    id: (Math.floor(Math.random() * 1000))
   };
+  const [product, setProduct] = useState(newProduct);
+  const {products, setProducts} = useContext(Context.Products);
 
-  handleSubmit = e => {
+  function addNewProduct(product) {
+    const newProduct = {...product};
+    setProducts([...products, newProduct]);
+  }
+
+  function handleSubmit(e) {
     e.preventDefault();
-    this.props.addNewProduct(this.state);
-    this.closeDialog();
-  };
+    addNewProduct(product);
+    closeDialog();
+  }
 
-  inputChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  function inputChange(event) {
+    setProduct({...product, [event.target.name]: event.target.value });
+  }
 
-  showDialog = () => {
-    this.dialog.showModal();
-  };
+  function showDialog() {
+    dialog.showModal();
+  }
 
-  closeDialog = () => {
-    this.dialog.close();
-  };
+  function closeDialog() {
+    dialog.close();
+  }
 
-  renderDialog() {
+  function renderDialog() {
     return (
       <form
-        onSubmit={this.handleSubmit}
+        onSubmit={handleSubmit}
         style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center"
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
         }}
       >
         <input
           type="text"
           name="name"
-          value={this.state.name}
+          value={product.name}
           placeholder="Name"
-          onChange={event => this.inputChange(event)}
+          onChange={event => inputChange(event)}
         />
         <input
           type="number"
           name="price"
-          value={this.state.price}
+          value={product.price}
           placeholder="Price"
-          onChange={event => this.inputChange(event)}
+          onChange={event => inputChange(event)}
         />
         <input
           type="number"
           name="available"
-          value={this.state.available}
+          value={product.available}
           placeholder="Quantity"
-          onChange={event => this.inputChange(event)}
+          onChange={event => inputChange(event)}
         />
         <div>
           <button type="submit">Submit</button>
-          <button onClick={this.closeDialog} type="button">
+          <button onClick={() => closeDialog()} type="button">
             Cancel
           </button>
         </div>
       </form>
     );
   }
-  render() {
-    return (
-      <div>
-        <button onClick={this.showDialog}>Add product</button>
-        <dialog className="dialog" ref={ref => (this.dialog = ref)}>
-          {this.renderDialog()}
-        </dialog>
-      </div>
-    );
-  }
-}
 
-export default connect(
-  null,
-  { addNewProduct }
-)(Modal);
+  return (
+    <div>
+      <button onClick={() => showDialog()}>Add product</button>
+      <dialog className="dialog" ref={ref => dialog = ref}>
+        {renderDialog()}
+      </dialog>
+    </div>
+  );
+}

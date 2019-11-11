@@ -13,7 +13,6 @@ export default function App() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
 
-  // rewrite on async
   useEffect(() => {
     if (products.length === 0) {
       fetch('/prodList.json')
@@ -30,7 +29,7 @@ export default function App() {
 
   useEffect(() => {console.log('product list', products); console.log('cart list ', cart);});
 
-    // Actions from product page
+  // Actions from product page
 
   function addCartItem(prod) {
     const inCart = cart.find(i => i.id === prod.id);
@@ -76,34 +75,34 @@ export default function App() {
   function handlerIncrease(prod) {
     increaseCartItem(prod);
     decreesInProductList(prod);
-  };
+  }
 
   function increaseCartItem(prod) {
-      let newCartArr = cart.map((item) => {
-        if (item.id === prod.id) {
-          item.amount = item.amount + 1;
-          item.available = item.available - 1;
-        }
-        return item;
-      })
-      setCart(newCartArr);
-    }
+    let newCartArr = cart.map((item) => {
+      if (item.id === prod.id) {
+        item.amount = item.amount + 1;
+        item.available = item.available - 1;
+      }
+      return item;
+    });
+    setCart(newCartArr);
+  }
 
-    function decreesInProductList(prod) {
-      let newProductsArr = products.map((item) => {
-        if (item.id === prod.id) {
-          item.amount = item.amount + 1;
-          item.available = item.available - 1;
-        }
-        return item;
-      })
-      setCart(newProductsArr);
-    }
+  function decreesInProductList(prod) {
+    let newProductsArr = products.map((item) => {
+      if (item.id === prod.id) {
+        item.amount = item.amount + 1;
+        item.available = item.available - 1;
+      }
+      return item;
+    });
+    setProducts(newProductsArr);
+  }
 
   function handlerDecrease(prod) {
     decrementCartItem(prod);
     increaseInProductList(prod);
-  };
+  }
 
   function decrementCartItem(prod) {
     let newCartArr = cart.map((item) => {
@@ -112,37 +111,37 @@ export default function App() {
         item.available = item.available + 1;
       }
       return item;
-    })
+    });
     setCart(newCartArr);
   }
 
   function increaseInProductList(prod) {
-    let newProductsArr = cart.map((item) => {
+    let newProductsArr = products.map((item) => {
       if (item.id === prod.id) {
         item.amount = item.amount - 1;
         item.available = item.available + 1;
       }
       return item;
-    })
+    });
     setProducts(newProductsArr);
   }
 
   return (
     <Router>
-      <div className="App">
-        <Header/>
-        <div className="App-wrapper">
-          <SideBar />
-          <Context.Products.Provider value={{products, setProducts, addCartItem}}>
-            <Context.Cart.Provider value={{handlerIncrease, handlerDecrease}}>
+      <Context.Products.Provider value={{products, setProducts, addCartItem}}>
+        <Context.Cart.Provider value={{cart, setCart, handlerIncrease, handlerDecrease}}>
+          <div className="App">
+            <Header/>
+            <div className="App-wrapper">
+              <SideBar />
               <Switch>
                 <Route path="/product" component={ProductList}/>
                 <Route path="/cart" component={CartList}/>
               </Switch>
-            </Context.Cart.Provider>
-          </Context.Products.Provider>
-        </div>
-      </div>
+            </div>
+          </div>
+        </Context.Cart.Provider>
+      </Context.Products.Provider>
     </Router>
   );
 }

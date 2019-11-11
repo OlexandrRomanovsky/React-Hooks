@@ -1,9 +1,7 @@
 import React, {useContext, useState} from 'react';
 import * as Context from '../../context';
-
 // Components
 import CartItem from './components/CartItem';
-
 // Styles
 import './cart-list.css';
 
@@ -20,7 +18,7 @@ export default function CartList() {
         item.amount = 0;
       }
       return item;
-    })
+    });
     setProducts(newProductListArr);
   }
 
@@ -38,14 +36,14 @@ export default function CartList() {
   function renderItems() {
     return (
       <div>
-        {cart.map((product, index) => (
+        {cart.map((product, index) => 
           <CartItem
             key={product.id}
             product={product}
             index={index}
             handleDeleteClick={handleDeleteClick}
           />
-        ))}
+        )}
       </div>
     );
   }
@@ -88,7 +86,6 @@ export default function CartList() {
           <button onClick={() => alert('Buy Something')}>theme</button>
         )}
       </div>
-      <button onClick={() => console.log(cart)}>test</button>
     </div>
   );
 }

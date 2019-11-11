@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { Cart } from '../../../context';
-
+import React, {useContext, useState} from 'react';
+import {Cart} from '../../../context';
 // Styles
 import './cart-item.css';
 
@@ -17,11 +16,11 @@ export default function CartItem(props) {
         </div>
         <div className='inputButtonBox'>
           {product.amount > 1 && (
-              <button onClick={handlerDecrease(product)}>-</button>
-            )}
+            <button onClick={() => handlerDecrease(product)}>-</button>
+          )}
           <div>{product.amount}</div>
-          {product.amount < product.available && (
-            <button onClick={handlerIncrease(product)}>+</button>
+          {product.available > 0 && (
+            <button onClick={() => handlerIncrease(product)}>+</button>
           )}
           <button
             className='btnElement'

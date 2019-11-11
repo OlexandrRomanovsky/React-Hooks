@@ -1,9 +1,7 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext} from 'react';
 import * as Context from '../../context';
-
 // Components
 import Product from './components/Product';
-
 // Styles
 import './product-list.css';
 
